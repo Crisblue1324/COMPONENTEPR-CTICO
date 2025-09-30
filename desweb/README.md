@@ -10,7 +10,7 @@ Este proyecto es un **CRUD (Crear, Leer, Actualizar, Eliminar)** de usuarios des
 
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu-repo.git
+   git clone https://github.com/Crisblue1324/COMPONENTEPR-CTICO.git
 
 2. Entra en el directorio del proyecto:
 
