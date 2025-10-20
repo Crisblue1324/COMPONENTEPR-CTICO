@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const Auth = require("../models/Auth");
+const Audit = require("../models/auditSqlite");
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -43,6 +44,12 @@ router.post("/login", async (req, res) => {
       JWT_SECRET,
       { expiresIn: "24h" }
     );
+
+    // 🔹 Registrar en SQLite
+    await Audit.create({
+      action: "Inicio de sesión",
+      userDni: username,
+    });
 
     res.json({
       message: "Login exitoso",
