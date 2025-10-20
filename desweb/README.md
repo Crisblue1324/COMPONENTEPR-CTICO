@@ -25,3 +25,9 @@ npm install
 4. Levanta el servidor de desarrollo:
 
 npm run dev
+
+5. Levanta base de datos backend (asegúrate de tener el backend corriendo):
+node index.js
+
+6. Para descargar dependecias sqlite3:
+npm install sqlite3 sequelize
