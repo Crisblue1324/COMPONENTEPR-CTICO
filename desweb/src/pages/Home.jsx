@@ -3,7 +3,7 @@ import { getUsers, createUser, updateUser, deleteUser } from "../api/userService
 import UserForm from "../components/UserForm";
 import UserList from "../components/UserList";
 
-export default function Home({ onLogout }) {
+export default function Home() {
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -14,10 +14,6 @@ export default function Home({ onLogout }) {
       setUsers(res.data);
     } catch (error) {
       console.error("Error al cargar usuarios:", error);
-      if (error.response?.status === 401) {
-        alert("Sesión expirada. Por favor, inicia sesión nuevamente.");
-        onLogout();
-      }
     }
   };
 
@@ -37,9 +33,6 @@ export default function Home({ onLogout }) {
       loadUsers();
     } catch (error) {
       console.error("Error al guardar usuario:", error);
-      if (error.response?.status === 401) {
-        onLogout();
-      }
     }
   };
 
@@ -55,9 +48,6 @@ export default function Home({ onLogout }) {
         loadUsers();
       } catch (error) {
         console.error("Error al eliminar usuario:", error);
-        if (error.response?.status === 401) {
-          onLogout();
-        }
       }
     }
   };
@@ -67,61 +57,14 @@ export default function Home({ onLogout }) {
     setEditingUser(null);
   };
 
-  const username = localStorage.getItem("username") || "Usuario";
-
   return (
     <div style={{ padding: "20px" }}>
-      {/* Header con botón de cerrar sesión */}
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: "20px",
-        flexWrap: "wrap",
-        gap: "10px"
-      }}>
-        <h1 style={{ margin: 0 }}>Formulario CRUD - React</h1>
+      <h1>Formulario CRUD - React</h1>
 
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "15px"
-        }}>
-          <span style={{
-            fontWeight: "500",
-            color: "#555"
-          }}>
-            👤 {username}
-          </span>
-          <button
-            onClick={onLogout}
-            style={{
-              background: "#dc3545",
-              color: "white",
-              border: "none",
-              padding: "10px 20px",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontWeight: "600",
-              transition: "all 0.3s ease"
-            }}
-            onMouseOver={(e) => e.target.style.background = "#c82333"}
-            onMouseOut={(e) => e.target.style.background = "#dc3545"}
-          >
-            🚪 Cerrar Sesión
-          </button>
-        </div>
-      </div>
-
-      {/* Botón agregar */}
-      <button
-        className="add-btn"
-        onClick={() => setShowForm(true)}
-      >
+      <button className="add-btn" onClick={() => setShowForm(true)}>
         Agregar Usuario
       </button>
 
-      {/* Modal del formulario */}
       {showForm && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -131,7 +74,6 @@ export default function Home({ onLogout }) {
         </div>
       )}
 
-      {/* Tabla */}
       <UserList users={users} onEdit={handleEdit} onDelete={handleDelete} />
     </div>
   );
